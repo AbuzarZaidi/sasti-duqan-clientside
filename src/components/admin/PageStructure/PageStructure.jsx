@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "../../../utils/MUI";
+import { Grid,Box } from "../../../utils/MUI";
 import SideBar from "../sidebar/SideBar";
 import TopBar from "../topbar/TopBar";
 const PageStructure = (props) => {
@@ -10,12 +10,25 @@ const PageStructure = (props) => {
         xs={0}
         md={2}
         lg={2.2}
-        sx={{
-          display: { xs: "none", md: "flex", lg: "flex" },
-          backgroundColor: "#FFFFFF",
-        }}
+        // sx={{
+        //   display: { xs: "none", md: "flex", lg: "flex" },
+        //   backgroundColor: "#262626",
+        //   height: "100vh",
+        //   position: "fixed",
+        //   top: 0
+        // }}
       >
-        <SideBar />
+        <Box sx={{
+          display: { xs: "none", md: "flex", lg: "flex" },
+          backgroundColor: "#262626",
+          height: "100vh",
+          position: "fixed",
+          width:"19%",
+          top: 0
+        }}>
+ <SideBar />
+        </Box>
+       
       </Grid>
       <Grid item xs={12} md={10} lg={9.8} sx={{ backgroundColor: "#F5F5F5" }}>
         <TopBar />
@@ -29,6 +42,7 @@ const PageStructure = (props) => {
             marginTop: "-50px",
             marginBottom: "10px",
             zIndex: "1000",
+            overflow: "auto"
           }}
         >
           {props.children}
