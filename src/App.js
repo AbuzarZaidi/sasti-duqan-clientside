@@ -29,6 +29,10 @@ import Page404 from "./pages/user/Page404";
 import PageStructure from "./components/admin/PageStructure/PageStructure";
 import AddProduct from "./pages/admin/AddProduct";
 import AllProduct from "./pages/admin/AllProducts";
+import AllMessages from "./pages/admin/AllMessages";
+import AllOrders from "./pages/admin/AllOrders";
+import AllUsers from "./pages/admin/AllUsers";
+import DashboardLandingPage from "./pages/admin/DashboardLandingPage";
 
 
 function App() {
@@ -71,8 +75,12 @@ function App() {
           {isLogin && <Route path="/checkout" element={<Checkout />} />}
           {!isLogin && <Route path="/signup" element={<Signup />} />}
           {!isLogin && <Route path="/signin" element={<Signin />} />}
+          <Route path="/admin/" element={ <PageStructure><DashboardLandingPage /></PageStructure>} />
           <Route path="/admin/addProduct" element={ <PageStructure><AddProduct /></PageStructure>} />
           <Route path="/admin/allProduct" element={ <PageStructure><AllProduct /></PageStructure>} />
+          <Route path="/admin/allMessages" element={ <PageStructure><AllMessages /></PageStructure>} />
+          <Route path="/admin/allUsers" element={ <PageStructure><AllUsers /></PageStructure>} />
+          <Route path="/admin/allOrders" element={ <PageStructure><AllOrders /></PageStructure>} />
              {/* <ProtectedRoute exact path="/admin/addProduct">
              <PageStructure><AddProduct /></PageStructure>
            </ProtectedRoute>
