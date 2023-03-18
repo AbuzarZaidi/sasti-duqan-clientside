@@ -10,11 +10,11 @@ import {
   FormControlLabel,
   FormControl,
 } from "../../utils/MUI";
-
+import AllProductsGrid from "../../components/admin/allproducts/AllProductsGrid";
 const AllProducts = () => {
   return (
     <Box  sx={{ width: "95%", mx: "auto", marginTop: "1rem", marginBottom: "5rem" }}>
-        <Box sx={{display:"flex",justifyContent:"space-between"}}>
+        <Box sx={{display:"flex",justifyContent:"space-between",mb:2}}>
         <Box>
         <Typography variant="h4" component="h3">
           All Product
@@ -26,7 +26,9 @@ const AllProducts = () => {
         </Button>
       </Box>
         </Box>
-
+<Box>
+  <AllProductsGrid/>
+</Box>
     </Box>
   )
 };
