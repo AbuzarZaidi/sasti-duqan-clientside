@@ -11,6 +11,7 @@ import Vendors from '../../components/user/home/Vendors'
 const Home = () => {
   return (
     <>
+    
     <Carousel/>
     <Featured/>
     {/* <Categories/> */}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { getProducts } from "../../functions/user/products";
 import PriceFilter from "../../components/user/shop/PriceFilter";
 import ColorFilter from "../../components/user/shop/ColorFilter";
@@ -10,7 +10,7 @@ import Pagination from "../../components/user/shop/Pagination";
 import SingleProduct from "../../components/user/shop/SingleProduct";
 
 const Shop = () => {
-  const category = useSelector((state) => state.productData.category);
+  // const category = useSelector((state) => state.productData.category);
   const [products, setProducts] = useState([]);
   const [show, setShow] = useState(false);
 

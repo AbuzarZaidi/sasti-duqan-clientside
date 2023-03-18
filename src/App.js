@@ -71,6 +71,7 @@ function App() {
           {isLogin && <Route path="/checkout" element={<Checkout />} />}
           {!isLogin && <Route path="/signup" element={<Signup />} />}
           {!isLogin && <Route path="/signin" element={<Signin />} />}
+          <Route path="/admin/addProduct" element={ <PageStructure><AddProduct /></PageStructure>} />
              {/* <ProtectedRoute exact path="/admin/addProduct">
              <PageStructure><AddProduct /></PageStructure>
            </ProtectedRoute>

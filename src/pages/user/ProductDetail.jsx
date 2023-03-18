@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState} from 'react'
 import { HashLink as Link } from "react-router-hash-link";
 import {  useNavigate } from "react-router-dom";
 import Description from '../../components/user/productDetail.jsx/Description';
