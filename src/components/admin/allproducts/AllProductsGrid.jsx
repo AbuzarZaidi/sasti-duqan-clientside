@@ -167,7 +167,7 @@ EnhancedTableHead.propTypes = {
 };
 
 function EnhancedTableToolbar(props) {
-  const { numSelected, deleteHandler, selectedItems } = props;
+  const { numSelected, deleteHandler, selectedItems, setSelected } = props;
 
   return (
     <Toolbar
@@ -206,7 +206,7 @@ function EnhancedTableToolbar(props) {
       {numSelected > 0 ? (
         <Tooltip title="Delete">
           <IconButton>
-            <DeleteIcon onClick={() => deleteHandler(selectedItems)} />
+            <DeleteIcon onClick={() => {deleteHandler(selectedItems); setSelected([])}} />
           </IconButton>
         </Tooltip>
       ) : (
@@ -267,7 +267,7 @@ const AllProductsGrid = ({ rows, deleteHandler, updateHandler }) => {
       );
     }
     if (selectedItems.includes(id)) {
-      const newSelectedItems = selectedItems.filter(item => item !== id);
+      const newSelectedItems = selectedItems.filter((item) => item !== id);
       setSelectedItems(newSelectedItems);
     } else {
       setSelectedItems([...selectedItems, id]);
@@ -284,10 +284,6 @@ const AllProductsGrid = ({ rows, deleteHandler, updateHandler }) => {
     setPage(0);
   };
 
-  //   const handleChangeDense = (event) => {
-  //     setDense(event.target.checked);
-  //   };
-
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -301,7 +297,7 @@ const AllProductsGrid = ({ rows, deleteHandler, updateHandler }) => {
           numSelected={selected.length}
           deleteHandler={deleteHandler}
           selectedItems={selectedItems}
-        
+          setSelected={ setSelected}
         />
         <TableContainer>
           <Table
