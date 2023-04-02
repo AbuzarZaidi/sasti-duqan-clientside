@@ -18,9 +18,14 @@ const Shop = () => {
     const fetchData = async () => {
       setShow(false);
       const result = await getProducts();
-      setShow(true);
+      console.log(result)
+      if(result.success===true){
+        setShow(true);
+        setProducts(result.data);
+      }
+      
 
-      setProducts(result.data);
+      
     };
     fetchData();
   }, []);

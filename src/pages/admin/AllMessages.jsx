@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import { getAllMessages } from "../../functions/admin/messages";
 import {
   Button,
   FormLabel,
@@ -10,9 +11,21 @@ import {
   FormControlLabel,
   FormControl,
 } from "../../utils/MUI";
-import AllProductsGrid from "../../components/admin/allproducts/AllProductsGrid";
+import AllMessagesGrid from "../../components/admin/allmessages/AllMessagesGrid";
 
 const AllMessages = () => {
+  const [messages,setMessages]=useState([])
+  useEffect(() => {
+    const fetchData=async()=>{
+const result=await getAllMessages("public");
+console.log(result)
+if(result.data.length>0){
+  setMessages(result.data)
+  console.log(result.data)
+}
+    }
+    fetchData();
+  }, [])
   return (
     <Box
       sx={{ width: "95%", mx: "auto", marginTop: "1rem", marginBottom: "5rem" }}
@@ -25,7 +38,7 @@ const AllMessages = () => {
         </Box>
       </Box>
       <Box>
-        <AllProductsGrid />
+        <AllMessagesGrid  rows={messages}/>
       </Box>
     </Box>
   );

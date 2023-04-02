@@ -64,7 +64,7 @@ function App() {
   return (
     <>
       <div className="body">
-        {/* <TopNavbar /> */}
+        <TopNavbar />
         {/* <Navbar /> */}
         <Routes>
           <Route path="/" element={<Home />} />
@@ -73,8 +73,8 @@ function App() {
           {isLogin && <Route path="/shop" element={<Shop />} />}
           {isLogin && <Route path="/cart" element={<ShoppingCart />} />}
           {isLogin && <Route path="/checkout" element={<Checkout />} />}
-          {!isLogin && <Route path="/signup" element={<Signup />} />}
-          {!isLogin && <Route path="/signin" element={<Signin />} />}
+          {isLogin && <Route path="/signup" element={<Signup />} />}
+          {isLogin && <Route path="/signin" element={<Signin />} />}
           <Route path="/admin/" element={ <PageStructure><DashboardLandingPage /></PageStructure>} />
           <Route path="/admin/addProduct" element={ <PageStructure><AddProduct /></PageStructure>} />
           <Route path="/admin/allProduct" element={ <PageStructure><AllProduct /></PageStructure>} />
