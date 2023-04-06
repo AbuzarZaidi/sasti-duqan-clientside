@@ -12,7 +12,7 @@ import {
   FormControl,
 } from "../../utils/MUI";
 import AllMessagesGrid from "../../components/admin/allmessages/AllMessagesGrid";
-const AllProducts = () => {
+const AllMessages = () => {
   const [messages,setMessages]=useState([])
   useEffect(() => {
     const fetchData=async()=>{
@@ -64,4 +64,4 @@ if(result.data.length>0){
   );
 };
 
-export default AllProducts;
+export default AllMessages;

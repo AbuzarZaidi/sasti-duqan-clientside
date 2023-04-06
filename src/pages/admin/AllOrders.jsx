@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import {
+  getAllOrders
+} from "../../functions/admin/orders";
 import {
   Button,
   FormLabel,
@@ -13,6 +16,18 @@ import {
 import AllOrdersGrid from "../../components/admin/allorders/AllOrdersGrid";
 
 const AllOrders = () => {
+  const [orders, setOrders] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getAllOrders();
+      // console.log(result);
+      if (result.data.length > 0) {
+        setOrders(result.data);
+        console.log(result.data);
+      }
+    };
+    fetchData();
+  }, []);
     return (
         <Box
           sx={{ width: "95%", mx: "auto", marginTop: "1rem", marginBottom: "5rem" }}
@@ -25,7 +40,7 @@ const AllOrders = () => {
             </Box>
           </Box>
           <Box>
-            <AllOrdersGrid />
+            <AllOrdersGrid rows={orders}/>
           </Box>
         </Box>
       );
