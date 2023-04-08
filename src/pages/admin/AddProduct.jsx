@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import {
-  createProducts
-} from "../../functions/admin/products";
+import { createProducts } from "../../functions/admin/products";
+import Stack from '@mui/material/Stack';
 import {
   Button,
   FormLabel,
@@ -12,10 +11,15 @@ import {
   RadioGroup,
   FormControlLabel,
   FormControl,
+  Checkbox,
+  CloseIcon,
+  AlertTitle,
+  MenuItem,Alert
 } from "../../utils/MUI";
-import Checkbox from "@mui/material/Checkbox";
-import MenuItem from "@mui/material/MenuItem";
 const AddProduct = () => {
+  const [showAlert,setShowAlert]=useState(false)
+  const [alertMessage,setAlertMessage]=useState("")
+  const [alertType,setAlertType]=useState("")
   const [productInfo, setProductInfo] = useState({
     name: "",
     description: "",
@@ -60,14 +64,27 @@ const AddProduct = () => {
     const { name, value } = event.target;
     setProductInfo({ ...productInfo, [name]: value });
   };
-  const addProductHandler = async() => {
-    console.log(productInfo);
-    console.log(visibility);
-    console.log(selectedColors);
-    console.log(selectedSizes);
-    console.log(selectedCategorys);
-const response =await createProducts(productInfo,visibility,selectedColors,selectedSizes,selectedCategorys)
-console.log(response)
+  const closeAlertHandler=()=>{
+    setShowAlert(false)
+    setAlertMessage("")
+    setAlertType("")
+  }
+  const addProductHandler = async () => {
+    const response = await createProducts(
+      productInfo,
+      visibility,
+      selectedColors,
+      selectedSizes,
+      selectedCategorys
+    );
+    if(response.success===true){
+      setAlertType("success")
+    }else if(response.success===false){
+      setAlertType("error")
+    }
+    setShowAlert(true)
+    setAlertMessage(response.message)
+    console.log(response);
     setProductInfo({
       name: "",
       description: "",
@@ -75,9 +92,28 @@ console.log(response)
       price: 0,
       stock: 0,
     });
+    setSelectedSizes([]);
+    setSelectedColors([]);
+    setSelectedCategorys([]);
     setVisibility("private");
   };
+  
+  const isButtonDisabled =
+  productInfo.name === "" ||
+  productInfo.description === "" ||
+  productInfo.longDescription === "" ||
+  productInfo.price === 0 ||
+  productInfo.stock === 0;
   return (
+    <>
+          {showAlert && (
+            <Stack sx={{ width: '100%' }} spacing={2}>
+  <Alert severity={alertType} action={<CloseIcon fontSize="inherit" onClick={ closeAlertHandler} />}>
+    <AlertTitle>{alertType==="success"?"Success":"Error"}</AlertTitle>
+    <strong>{alertMessage}</strong>
+  </Alert></Stack>
+)}
+    
     <Box
       sx={{ width: "95%", mx: "auto", marginTop: "1rem", marginBottom: "5rem" }}
     >
@@ -111,6 +147,7 @@ console.log(response)
             id="price"
             name="price"
             size="small"
+            type="number"
             label="Price"
             value={productInfo.price}
             onChange={handleInputChange}
@@ -130,6 +167,7 @@ console.log(response)
           <TextField
             id="stock"
             name="stock"
+            type="number"
             size="small"
             label="Stock"
             variant="outlined"
@@ -402,13 +440,20 @@ console.log(response)
       >
         <Button
           variant="contained"
-          sx={{ backgroundColor: "#FD8004" }}
+          sx={{
+            backgroundColor: "#FD8004",
+            "&:hover": {
+              backgroundColor: "#FFA931",
+            },
+          }}
           onClick={addProductHandler}
+          disabled={isButtonDisabled}
         >
           Add Product
         </Button>
       </Box>
     </Box>
+    </>
   );
 };
 

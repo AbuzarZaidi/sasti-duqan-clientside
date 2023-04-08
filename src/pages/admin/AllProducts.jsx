@@ -51,6 +51,7 @@ const AllProducts = () => {
       }
     }
   };
+ 
   return (
     <Box
       sx={{ width: "95%", mx: "auto", marginTop: "1rem", marginBottom: "5rem" }}
