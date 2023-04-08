@@ -32,6 +32,14 @@ const AddProduct = () => {
       setSelectedSizes(selectedSizes.filter((size) => size !== value));
     }
   };
+  const handleCategoryChange = (event) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setSelectedCategorys([...selectedCategorys, value]);
+    } else {
+      setSelectedCategorys(selectedCategorys.filter((category) => category !== value));
+    }
+  };
   const handleColorChange = (event) => {
     const { value, checked } = event.target;
     if (checked) {
@@ -52,6 +60,7 @@ const AddProduct = () => {
     console.log(visibility);
     console.log(selectedColors);
     console.log(selectedSizes);
+    console.log(selectedCategorys);
     setProductInfo({
       name: "",
       description: "",
@@ -128,8 +137,47 @@ const AddProduct = () => {
             size="small"
             label="Category"
             variant="outlined"
+            select
+            value={selectedCategorys.join(", ")}
             sx={{ width: "400px" }}
-          />
+          >
+            <MenuItem value="fashion">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={selectedCategorys.includes("fashion")}
+                    onChange={handleCategoryChange}
+                    value="fashion"
+                  />
+                }
+                label="Fashion"
+              />
+            </MenuItem>
+            <MenuItem value="electronics">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={selectedCategorys.includes("electronics")}
+                    onChange={handleCategoryChange}
+                    value="electronics"
+                  />
+                }
+                label="Electronics"
+              />
+            </MenuItem>
+            <MenuItem value="beauty">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={selectedCategorys.includes("beauty")}
+                    onChange={handleCategoryChange}
+                    value="beauty"
+                  />
+                }
+                label="Beauty Products"
+              />
+            </MenuItem>
+          </TextField>
         </Box>
       </Box>
       <Box
