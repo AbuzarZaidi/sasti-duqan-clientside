@@ -83,11 +83,11 @@ const AddProduct = () => {
   };
   const addProductHandler = async () => {
     const formData = new FormData();
-    console.log(image)
-    formData.append("image", image);
+    formData.append('images',image)
     for (let i = 0; i < images.length; i++) {
       formData.append('images', images[i]);
     }
+    
     formData.append("name", productInfo.name);
     formData.append("description", productInfo.description);
     formData.append("longDescription", productInfo.longDescription);
