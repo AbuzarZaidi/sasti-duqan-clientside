@@ -13,16 +13,18 @@ import {
 import Checkbox from "@mui/material/Checkbox";
 import MenuItem from "@mui/material/MenuItem";
 const AddProduct = () => {
-  const [productInfo,setProductInfo]=useState({
-    name:"",
-    description:"",
-    longDescription:"",
-    price:0,
-    stock:0
-  })
+  const [productInfo, setProductInfo] = useState({
+    name: "",
+    description: "",
+    longDescription: "",
+    price: 0,
+    stock: 0,
+  });
   const [selectedSizes, setSelectedSizes] = useState([]);
-   const [visibility, setVisibility] = useState('private');
-   const handleSizeChange = (event) => {
+  const [selectedColors, setSelectedColors] = useState([]);
+  const [selectedCategorys, setSelectedCategorys] = useState([]);
+  const [visibility, setVisibility] = useState("private");
+  const handleSizeChange = (event) => {
     const { value, checked } = event.target;
     if (checked) {
       setSelectedSizes([...selectedSizes, value]);
@@ -30,26 +32,35 @@ const AddProduct = () => {
       setSelectedSizes(selectedSizes.filter((size) => size !== value));
     }
   };
+  const handleColorChange = (event) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setSelectedColors([...selectedColors, value]);
+    } else {
+      setSelectedColors(selectedColors.filter((color) => color !== value));
+    }
+  };
   const handleVisibilityChange = (event) => {
     setVisibility(event.target.value);
-  }
+  };
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setProductInfo({ ...productInfo, [name]: value });
-  }
-  const addProductHandler=()=>{
-    console.log(productInfo)
-    console.log(visibility)
-    console.log(selectedSizes)
+  };
+  const addProductHandler = () => {
+    console.log(productInfo);
+    console.log(visibility);
+    console.log(selectedColors);
+    console.log(selectedSizes);
     setProductInfo({
-      name:"",
-      description:"",
-      longDescription:"",
-      price:0,
-      stock:0
-    })
-    setVisibility("private")
-  }
+      name: "",
+      description: "",
+      longDescription: "",
+      price: 0,
+      stock: 0,
+    });
+    setVisibility("private");
+  };
   return (
     <Box
       sx={{ width: "95%", mx: "auto", marginTop: "1rem", marginBottom: "5rem" }}
@@ -86,7 +97,7 @@ const AddProduct = () => {
             size="small"
             label="Price"
             value={productInfo.price}
-          onChange={handleInputChange}
+            onChange={handleInputChange}
             variant="outlined"
             sx={{ width: "400px" }}
           />
@@ -107,7 +118,7 @@ const AddProduct = () => {
             label="Stock"
             variant="outlined"
             value={productInfo.stock}
-          onChange={handleInputChange}
+            onChange={handleInputChange}
             sx={{ width: "400px" }}
           />
         </Box>
@@ -134,57 +145,96 @@ const AddProduct = () => {
             size="small"
             label="Color"
             variant="outlined"
+            select
+            value={selectedColors.join(", ")}
             sx={{ width: "400px" }}
-          />
+          >
+            <MenuItem value="small">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={selectedColors.includes("red")}
+                    onChange={handleColorChange}
+                    value="red"
+                  />
+                }
+                label="Red"
+              />
+            </MenuItem>
+            <MenuItem value="medium">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={selectedColors.includes("green")}
+                    onChange={handleColorChange}
+                    value="green"
+                  />
+                }
+                label="Green"
+              />
+            </MenuItem>
+            <MenuItem value="blue">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={selectedColors.includes("blue")}
+                    onChange={handleColorChange}
+                    value="blue"
+                  />
+                }
+                label="Blue"
+              />
+            </MenuItem>
+          </TextField>
         </Box>
         <Box>
-      <TextField
-        id="size"
-        size="small"
-        label="Size"
-        variant="outlined"
-        select
-        value={selectedSizes.join(", ")}
-        sx={{ width: "400px" }}
-      >
-        <MenuItem value="small">
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={selectedSizes.includes("small")}
-                onChange={handleSizeChange}
-                value="small"
+          <TextField
+            id="size"
+            size="small"
+            label="Size"
+            variant="outlined"
+            select
+            value={selectedSizes.join(", ")}
+            sx={{ width: "400px" }}
+          >
+            <MenuItem value="small">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={selectedSizes.includes("small")}
+                    onChange={handleSizeChange}
+                    value="small"
+                  />
+                }
+                label="Small"
               />
-            }
-            label="Small"
-          />
-        </MenuItem>
-        <MenuItem value="medium">
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={selectedSizes.includes("medium")}
-                onChange={handleSizeChange}
-                value="medium"
+            </MenuItem>
+            <MenuItem value="medium">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={selectedSizes.includes("medium")}
+                    onChange={handleSizeChange}
+                    value="medium"
+                  />
+                }
+                label="Medium"
               />
-            }
-            label="Medium"
-          />
-        </MenuItem>
-        <MenuItem value="large">
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={selectedSizes.includes("large")}
-                onChange={handleSizeChange}
-                value="large"
+            </MenuItem>
+            <MenuItem value="large">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={selectedSizes.includes("large")}
+                    onChange={handleSizeChange}
+                    value="large"
+                  />
+                }
+                label="Large"
               />
-            }
-            label="Large"
-          />
-        </MenuItem>
-      </TextField>
-    </Box>
+            </MenuItem>
+          </TextField>
+        </Box>
       </Box>
       <Box
         sx={{
@@ -201,7 +251,7 @@ const AddProduct = () => {
             label="Description"
             variant="outlined"
             value={productInfo.description}
-          onChange={handleInputChange}
+            onChange={handleInputChange}
             sx={{ width: "910px" }}
           />
         </Box>
@@ -220,7 +270,7 @@ const AddProduct = () => {
             name="longDescription"
             label="Long Description"
             value={productInfo.longDescription}
-          onChange={handleInputChange}
+            onChange={handleInputChange}
             multiline
             rows={4}
             variant="outlined"
@@ -260,7 +310,7 @@ const AddProduct = () => {
       </Box>
       <Box sx={{ display: "flex" }}>
         <Box sx={{ marginTop: "50px", marginLeft: "50px" }}>
-          <Typography variant="body1" component="h3" sx={{color:"#000000"}}>
+          <Typography variant="body1" component="h3" sx={{ color: "#000000" }}>
             Cover Image
           </Typography>
           <Button
@@ -276,7 +326,7 @@ const AddProduct = () => {
           </Button>
         </Box>
         <Box sx={{ marginTop: "50px", marginLeft: "50px" }}>
-          <Typography variant="body1" component="h3" sx={{color:"#000000"}}>
+          <Typography variant="body1" component="h3" sx={{ color: "#000000" }}>
             Other Images
           </Typography>
           <Button
@@ -295,7 +345,11 @@ const AddProduct = () => {
       <Box
         sx={{ display: "flex", justifyContent: "flex-end", marginTop: "50px" }}
       >
-        <Button variant="contained" sx={{ backgroundColor: "#FD8004" }} onClick={addProductHandler}>
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: "#FD8004" }}
+          onClick={addProductHandler}
+        >
           Add Product
         </Button>
       </Box>
