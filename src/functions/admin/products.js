@@ -1,7 +1,7 @@
 import * as api from "../../api/admin/products"
-export const createProducts=async(productInfo,visibility,selectedColors,selectedSizes,selectedCategorys)=>{
+export const createProducts=async(formData, header)=>{
   try {
-    const {data } = await api.createProducts(productInfo,visibility,selectedColors,selectedSizes,selectedCategorys);
+    const {data } = await api.createProducts(formData, header);
     return data;
   } catch (error) {
     return error;
