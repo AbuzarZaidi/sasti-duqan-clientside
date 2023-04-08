@@ -10,8 +10,46 @@ import {
   FormControlLabel,
   FormControl,
 } from "../../utils/MUI";
-
+import Checkbox from "@mui/material/Checkbox";
+import MenuItem from "@mui/material/MenuItem";
 const AddProduct = () => {
+  const [productInfo,setProductInfo]=useState({
+    name:"",
+    description:"",
+    longDescription:"",
+    price:0,
+    stock:0
+  })
+  const [selectedSizes, setSelectedSizes] = useState([]);
+   const [visibility, setVisibility] = useState('private');
+   const handleSizeChange = (event) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setSelectedSizes([...selectedSizes, value]);
+    } else {
+      setSelectedSizes(selectedSizes.filter((size) => size !== value));
+    }
+  };
+  const handleVisibilityChange = (event) => {
+    setVisibility(event.target.value);
+  }
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setProductInfo({ ...productInfo, [name]: value });
+  }
+  const addProductHandler=()=>{
+    console.log(productInfo)
+    console.log(visibility)
+    console.log(selectedSizes)
+    setProductInfo({
+      name:"",
+      description:"",
+      longDescription:"",
+      price:0,
+      stock:0
+    })
+    setVisibility("private")
+  }
   return (
     <Box
       sx={{ width: "95%", mx: "auto", marginTop: "1rem", marginBottom: "5rem" }}
@@ -32,17 +70,23 @@ const AddProduct = () => {
         <Box>
           <TextField
             id="name"
+            name="name"
             size="small"
             label="Name"
             variant="outlined"
+            value={productInfo.name}
+            onChange={handleInputChange}
             sx={{ width: "400px" }}
           />
         </Box>
         <Box>
           <TextField
             id="price"
+            name="price"
             size="small"
             label="Price"
+            value={productInfo.price}
+          onChange={handleInputChange}
             variant="outlined"
             sx={{ width: "400px" }}
           />
@@ -57,10 +101,13 @@ const AddProduct = () => {
       >
         <Box>
           <TextField
-            id="quantity"
+            id="stock"
+            name="stock"
             size="small"
-            label="Quantity"
+            label="Stock"
             variant="outlined"
+            value={productInfo.stock}
+          onChange={handleInputChange}
             sx={{ width: "400px" }}
           />
         </Box>
@@ -91,14 +138,53 @@ const AddProduct = () => {
           />
         </Box>
         <Box>
-          <TextField
-            id="size"
-            size="small"
-            label="Size"
-            variant="outlined"
-            sx={{ width: "400px" }}
+      <TextField
+        id="size"
+        size="small"
+        label="Size"
+        variant="outlined"
+        select
+        value={selectedSizes.join(", ")}
+        sx={{ width: "400px" }}
+      >
+        <MenuItem value="small">
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={selectedSizes.includes("small")}
+                onChange={handleSizeChange}
+                value="small"
+              />
+            }
+            label="Small"
           />
-        </Box>
+        </MenuItem>
+        <MenuItem value="medium">
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={selectedSizes.includes("medium")}
+                onChange={handleSizeChange}
+                value="medium"
+              />
+            }
+            label="Medium"
+          />
+        </MenuItem>
+        <MenuItem value="large">
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={selectedSizes.includes("large")}
+                onChange={handleSizeChange}
+                value="large"
+              />
+            }
+            label="Large"
+          />
+        </MenuItem>
+      </TextField>
+    </Box>
       </Box>
       <Box
         sx={{
@@ -110,9 +196,12 @@ const AddProduct = () => {
         <Box>
           <TextField
             id="description"
+            name="description"
             size="small"
             label="Description"
             variant="outlined"
+            value={productInfo.description}
+          onChange={handleInputChange}
             sx={{ width: "910px" }}
           />
         </Box>
@@ -127,8 +216,11 @@ const AddProduct = () => {
       >
         <Box>
           <TextField
-            id="lDescription"
+            id="longDescription"
+            name="longDescription"
             label="Long Description"
+            value={productInfo.longDescription}
+          onChange={handleInputChange}
             multiline
             rows={4}
             variant="outlined"
@@ -147,17 +239,19 @@ const AddProduct = () => {
           <RadioGroup
             row
             aria-labelledby="demo-row-radio-buttons-group-label"
-            name="row-radio-buttons-group"
+            name="visibility"
+            value={visibility}
+            onChange={handleVisibilityChange}
           >
             <FormControlLabel
-              value="female"
+              value="public"
               control={<Radio />}
               label="Public"
               sx={{ marginLeft: "50px" }}
             />
             <FormControlLabel
               sx={{ marginLeft: "150px" }}
-              value="male"
+              value="private"
               control={<Radio />}
               label="Private"
             />
@@ -201,7 +295,7 @@ const AddProduct = () => {
       <Box
         sx={{ display: "flex", justifyContent: "flex-end", marginTop: "50px" }}
       >
-        <Button variant="contained" sx={{ backgroundColor: "#FD8004" }}>
+        <Button variant="contained" sx={{ backgroundColor: "#FD8004" }} onClick={addProductHandler}>
           Add Product
         </Button>
       </Box>

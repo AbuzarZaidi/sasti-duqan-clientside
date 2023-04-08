@@ -1,4 +1,12 @@
 import * as api from "../../api/admin/products"
+export const createProducts=async(product)=>{
+  try {
+    const {data } = await api.createProducts(product);
+    return data;
+  } catch (error) {
+    return error;
+  }
+}
 export const getAllPrivateProducts = async (visibility) => {
     try {
       const {data } = await api.getAllPrivateProducts(visibility);
