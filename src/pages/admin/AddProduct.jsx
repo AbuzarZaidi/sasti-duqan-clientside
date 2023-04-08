@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import {
+  createProducts
+} from "../../functions/admin/products";
+import {
   Button,
   FormLabel,
   Box,
@@ -37,7 +40,9 @@ const AddProduct = () => {
     if (checked) {
       setSelectedCategorys([...selectedCategorys, value]);
     } else {
-      setSelectedCategorys(selectedCategorys.filter((category) => category !== value));
+      setSelectedCategorys(
+        selectedCategorys.filter((category) => category !== value)
+      );
     }
   };
   const handleColorChange = (event) => {
@@ -55,12 +60,14 @@ const AddProduct = () => {
     const { name, value } = event.target;
     setProductInfo({ ...productInfo, [name]: value });
   };
-  const addProductHandler = () => {
+  const addProductHandler = async() => {
     console.log(productInfo);
     console.log(visibility);
     console.log(selectedColors);
     console.log(selectedSizes);
     console.log(selectedCategorys);
+const response =await createProducts(productInfo,visibility,selectedColors,selectedSizes,selectedCategorys)
+console.log(response)
     setProductInfo({
       name: "",
       description: "",
