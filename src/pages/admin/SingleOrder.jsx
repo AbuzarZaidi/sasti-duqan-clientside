@@ -90,6 +90,11 @@ const SingleOrder = () => {
         </Box>
         <Box></Box>
       </Box>
+      <Box sx={{ marginTop: 3, marginBottom: 2 }}>
+          <Typography variant="h6" component="h6">
+            Products:
+          </Typography>
+        </Box>
       <ProductsGrid product={order.products}/>
     </Box>
   );
