@@ -21,10 +21,8 @@ const AllProducts = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await getAllPrivateProducts("");
-      // console.log(result);
       if (result.data.length > 0) {
         setProducts(result.data);
-        // console.log(result.data);
       }
     };
     fetchData();

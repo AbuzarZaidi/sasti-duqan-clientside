@@ -1,0 +1,9 @@
+.navLink {
+  margin: 10px;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 18px;
+}
+.active {
+    color: #FFA931;
+  }
