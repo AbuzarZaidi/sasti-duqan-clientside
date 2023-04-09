@@ -32,7 +32,9 @@ const AddProduct = () => {
   const [images, setImages] = useState([]);
   const [image,setImage]=useState("")
   const [selectedColors, setSelectedColors] = useState([]);
-  const [selectedCategorys, setSelectedCategorys] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+
   const [visibility, setVisibility] = useState("private");
   const handleOtherImages = (e) => {
     const uploadedImages = e.target.files;
@@ -51,16 +53,7 @@ const AddProduct = () => {
       setSelectedSizes(selectedSizes.filter((size) => size !== value));
     }
   };
-  const handleCategoryChange = (event) => {
-    const { value, checked } = event.target;
-    if (checked) {
-      setSelectedCategorys([...selectedCategorys, value]);
-    } else {
-      setSelectedCategorys(
-        selectedCategorys.filter((category) => category !== value)
-      );
-    }
-  };
+
   const handleColorChange = (event) => {
     const { value, checked } = event.target;
     if (checked) {
@@ -71,6 +64,9 @@ const AddProduct = () => {
   };
   const handleVisibilityChange = (event) => {
     setVisibility(event.target.value);
+  };
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
   };
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -96,7 +92,7 @@ const AddProduct = () => {
     formData.append("visibility", visibility);
     formData.append("selectedColors", JSON.stringify(selectedColors));
     formData.append("selectedSizes",JSON.stringify(selectedSizes));
-    formData.append("selectedCategorys", JSON.stringify(selectedCategorys));
+    formData.append("selectedCategorys", selectedCategory);
    console.log(formData)
     const response=  await createProducts(formData, {
       headers: {
@@ -121,7 +117,7 @@ const AddProduct = () => {
     });
     setSelectedSizes([]);
     setSelectedColors([]);
-    setSelectedCategorys([]);
+    setSelectedCategory([]);
     setVisibility("private");
   };
 
@@ -217,52 +213,51 @@ const AddProduct = () => {
             />
           </Box>
           <Box>
-            <TextField
-              id="category"
-              size="small"
-              label="Category"
-              variant="outlined"
-              select
-              value={selectedCategorys.join(", ")}
-              sx={{ width: "400px" }}
-            >
-              <MenuItem value="fashion">
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedCategorys.includes("fashion")}
-                      onChange={handleCategoryChange}
-                      value="fashion"
-                    />
-                  }
-                  label="Fashion"
-                />
-              </MenuItem>
-              <MenuItem value="electronics">
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedCategorys.includes("electronics")}
-                      onChange={handleCategoryChange}
-                      value="electronics"
-                    />
-                  }
-                  label="Electronics"
-                />
-              </MenuItem>
-              <MenuItem value="beauty">
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedCategorys.includes("beauty")}
-                      onChange={handleCategoryChange}
-                      value="beauty"
-                    />
-                  }
-                  label="Beauty Products"
-                />
-              </MenuItem>
-            </TextField>
+          <TextField
+      id="category"
+      size="small"
+      label="Category"
+      variant="outlined"
+      select
+      value={selectedCategory}
+      onChange={handleCategoryChange}
+      sx={{ width: "400px" }}
+    >
+      <MenuItem value="fashion">
+        <FormControlLabel
+          control={
+            <Radio
+              checked={selectedCategory === "fashion"}
+              value="fashion"
+            />
+          }
+          label="Fashion"
+        />
+      </MenuItem>
+      <MenuItem value="electronics">
+        <FormControlLabel
+          control={
+            <Radio
+              checked={selectedCategory === "electronics"}
+              value="electronics"
+            />
+          }
+          label="Electronics"
+        />
+      </MenuItem>
+      <MenuItem value="beauty">
+        <FormControlLabel
+          control={
+            <Radio
+              checked={selectedCategory === "beauty"}
+              value="beauty"
+            />
+          }
+          label="Beauty Products"
+        />
+      </MenuItem>
+    </TextField>
+
           </Box>
         </Box>
         <Box
