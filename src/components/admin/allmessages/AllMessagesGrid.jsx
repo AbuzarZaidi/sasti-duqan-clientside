@@ -1,6 +1,9 @@
 import React,{useState} from 'react';
+import { useSelector, useDispatch } from "react-redux";
+import { setMessageHandler} from '../../../store/admin/message'
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
+import { Link,useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -21,7 +24,7 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-
+import ReadMoreOutlinedIcon from '@mui/icons-material/ReadMoreOutlined';
 function createData(name, email,subject) {
   return {
     name,
@@ -200,7 +203,9 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-const AllProductsGrid = ({ rows, deleteHandler, updateHandler }) => {
+const AllMessagesGrid = ({ rows, deleteHandler, updateHandler }) => {
+  const dispatch = useDispatch();
+  const navigate=useNavigate();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
@@ -213,7 +218,14 @@ const AllProductsGrid = ({ rows, deleteHandler, updateHandler }) => {
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
-
+const singleMessageHandler=(row)=>{
+  console.log(row)
+  dispatch(setMessageHandler(row))
+  setTimeout(() => {
+    navigate('/admin/singleMessage')
+  }, 100);
+  
+}
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelected = rows.map((n) => n.name);
@@ -329,7 +341,11 @@ const AllProductsGrid = ({ rows, deleteHandler, updateHandler }) => {
                       <TableCell align="left">{row.subject}</TableCell> 
                       <TableCell align="right">
                         <Box>
-                          {/* <CreateOutlinedIcon sx={{ cursor: "pointer" }} /> */}
+                        <IconButton
+                        onClick={()=>{singleMessageHandler(row)}}
+            >
+                 <ReadMoreOutlinedIcon sx={{ cursor: "pointer" }}/>
+            </IconButton>
                         </Box>
                       </TableCell>
                     </TableRow>
@@ -361,4 +377,4 @@ const AllProductsGrid = ({ rows, deleteHandler, updateHandler }) => {
   );
 };
 
-export default AllProductsGrid;
+export default AllMessagesGrid;

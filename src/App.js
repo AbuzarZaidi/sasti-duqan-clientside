@@ -30,7 +30,9 @@ import PageStructure from "./components/admin/PageStructure/PageStructure";
 import AddProduct from "./pages/admin/AddProduct";
 import AllProduct from "./pages/admin/AllProducts";
 import AllMessages from "./pages/admin/AllMessages";
+import SingleMessage from "./pages/admin/SingleMessage";
 import AllOrders from "./pages/admin/AllOrders";
+import SingleOrder from "./pages/admin/SingleOrder";
 import AllUsers from "./pages/admin/AllUsers";
 import DashboardLandingPage from "./pages/admin/DashboardLandingPage";
 
@@ -79,8 +81,10 @@ function App() {
           <Route path="/admin/addProduct" element={ <PageStructure><AddProduct /></PageStructure>} />
           <Route path="/admin/allProduct" element={ <PageStructure><AllProduct /></PageStructure>} />
           <Route path="/admin/allMessages" element={ <PageStructure><AllMessages /></PageStructure>} />
+          <Route path="/admin/singleMessage" element={ <PageStructure><SingleMessage /></PageStructure>} />
           <Route path="/admin/allUsers" element={ <PageStructure><AllUsers /></PageStructure>} />
           <Route path="/admin/allOrders" element={ <PageStructure><AllOrders /></PageStructure>} />
+          <Route path="/admin/SingleOrder" element={ <PageStructure><SingleOrder /></PageStructure>} />
              {/* <ProtectedRoute exact path="/admin/addProduct">
              <PageStructure><AddProduct /></PageStructure>
            </ProtectedRoute>

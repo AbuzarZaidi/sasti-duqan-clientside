@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React,{useState} from 'react';
+import { useSelector, useDispatch } from "react-redux";
+import {setOrderHandler} from '../../../store/admin/order'
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
-
+import { Link,useNavigate } from "react-router-dom";
 import TableBody from "@mui/material/TableBody";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import ReadMoreOutlinedIcon from '@mui/icons-material/ReadMoreOutlined';
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
@@ -225,6 +228,8 @@ EnhancedTableToolbar.propTypes = {
 };
 
 const AllOrdersGrid = ({ rows }) => {
+  const dispatch = useDispatch();
+  const navigate=useNavigate();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
@@ -237,7 +242,14 @@ const AllOrdersGrid = ({ rows }) => {
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
-
+  const singleOrderHandler=(row)=>{
+    
+    dispatch(setOrderHandler(row))
+    setTimeout(() => {
+      navigate('/admin/singleOrder')
+    }, 100);
+    
+  }
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelected = rows.map((n) => n.name);
@@ -355,6 +367,15 @@ const AllOrdersGrid = ({ rows }) => {
                       <TableCell align="right">{row.userInfo.email}</TableCell>
                       <TableCell align="right">
                       {row.userInfo.phoneNumber}
+                      </TableCell>
+                      <TableCell align="right">
+                        <Box>
+                        <IconButton
+                        onClick={()=>{singleOrderHandler(row)}}
+            >
+                 <ReadMoreOutlinedIcon sx={{ cursor: "pointer" }}/>
+            </IconButton>
+                        </Box>
                       </TableCell>
                     </TableRow>
                   );
