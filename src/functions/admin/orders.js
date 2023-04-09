@@ -7,3 +7,11 @@ export const getAllOrders = async () => {
       return error;
     }
   };
+export const getSingleOrder = async (orderId) => {
+    try {
+      const {data } = await api.getSingleOrder(orderId);
+      return data;
+    } catch (error) {
+      return error;
+    }
+  };

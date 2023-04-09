@@ -1,6 +1,4 @@
 import React,{useState} from 'react';
-import { useSelector, useDispatch } from "react-redux";
-import {setOrderHandler} from '../../../store/admin/order'
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -228,7 +226,6 @@ EnhancedTableToolbar.propTypes = {
 };
 
 const AllOrdersGrid = ({ rows }) => {
-  const dispatch = useDispatch();
   const navigate=useNavigate();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
@@ -243,12 +240,7 @@ const AllOrdersGrid = ({ rows }) => {
     setOrderBy(property);
   };
   const singleOrderHandler=(row)=>{
-    
-    dispatch(setOrderHandler(row))
-    setTimeout(() => {
-      navigate('/admin/singleOrder')
-    }, 100);
-    
+      navigate(`/admin/singleOrder/${row.id}`)    
   }
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {

@@ -1,6 +1,4 @@
 import React,{useState} from 'react';
-import { useSelector, useDispatch } from "react-redux";
-import { setMessageHandler} from '../../../store/admin/message'
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import { Link,useNavigate } from "react-router-dom";
@@ -204,7 +202,6 @@ EnhancedTableToolbar.propTypes = {
 };
 
 const AllMessagesGrid = ({ rows, deleteHandler, updateHandler }) => {
-  const dispatch = useDispatch();
   const navigate=useNavigate();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
@@ -219,12 +216,7 @@ const AllMessagesGrid = ({ rows, deleteHandler, updateHandler }) => {
     setOrderBy(property);
   };
 const singleMessageHandler=(row)=>{
-  console.log(row)
-  dispatch(setMessageHandler(row))
-  setTimeout(() => {
-    navigate('/admin/singleMessage')
-  }, 100);
-  
+    navigate(`/admin/singleMessage/${row.id}`)
 }
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {

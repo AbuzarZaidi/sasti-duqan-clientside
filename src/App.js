@@ -81,10 +81,10 @@ function App() {
           <Route path="/admin/addProduct" element={ <PageStructure><AddProduct /></PageStructure>} />
           <Route path="/admin/allProduct" element={ <PageStructure><AllProduct /></PageStructure>} />
           <Route path="/admin/allMessages" element={ <PageStructure><AllMessages /></PageStructure>} />
-          <Route path="/admin/singleMessage" element={ <PageStructure><SingleMessage /></PageStructure>} />
+          <Route path="/admin/singleMessage/:messageId" element={ <PageStructure><SingleMessage /></PageStructure>} />
           <Route path="/admin/allUsers" element={ <PageStructure><AllUsers /></PageStructure>} />
           <Route path="/admin/allOrders" element={ <PageStructure><AllOrders /></PageStructure>} />
-          <Route path="/admin/SingleOrder" element={ <PageStructure><SingleOrder /></PageStructure>} />
+          <Route path="/admin/SingleOrder/:orderId" element={ <PageStructure><SingleOrder /></PageStructure>} />
              {/* <ProtectedRoute exact path="/admin/addProduct">
              <PageStructure><AddProduct /></PageStructure>
            </ProtectedRoute>

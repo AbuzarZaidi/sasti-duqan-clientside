@@ -1,30 +1,49 @@
-import React, { useEffect } from "react";
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import {getSingleMessage} from '../../functions/admin/messages'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 const SingleMessage = () => {
-  const message = useSelector((state) => state.messageData.message);
+  const { messageId } = useParams(); // Access productId from URL parameter
+  const [messageData, setMessageData] = useState(null); // State to store product data
 
+  useEffect(() => {
+    
+    const fetchMessageData = async () => {
+      try {
+        const response = await getSingleMessage(messageId); 
+        
+        console.log(response.data)
+        setMessageData(response.data);
+      } catch (error) {
+        console.error('Error fetching product data:', error);
+      }
+    };
+    fetchMessageData(); 
+  }, [messageId]);
+  if (!messageData) {
+    return <p>Loading...</p>; 
+  }
   return (
     <>
     <Box sx={{marginTop: 3, display: "flex", justifyContent: "center", width: "100%",color:"#000000"}}>
   <Typography variant="h4" gutterBottom>
-  <b>Subject:</b>  {message.subject}
+  <b>Subject:</b>  {messageData.subject}
   </Typography>
 </Box>
     <Box sx={{marginTop: 3, display: "flex", justifyContent: "flex-start", width: "80%",marginLeft:2,color:"#000000"}}>
   <Typography variant="h6" gutterBottom>
-  <b>Name:</b>  {message.name}
+  <b>Name:</b>  {messageData.name}
   </Typography>
 </Box>
     <Box sx={{marginTop: 3, display: "flex", justifyContent: "flex-start", width: "80%",marginLeft:2,color:"#000000"}}>
     <Typography variant="h6" gutterBottom>
-  <b>Email:</b>  {message.email}
+  <b>Email:</b>  {messageData.email}
   </Typography>
 </Box>
 <Box sx={{marginTop: 3, display: "flex", justifyContent: "flex-start", width: "80%",marginLeft:2,color:"#000000",marginBottom:2}}>
         <Typography variant="subtitle1" gutterBottom>
-      <b>Detail:</b> {message.message}
+      <b>Detail:</b> {messageData.message}
       </Typography>
     </Box>
     </>

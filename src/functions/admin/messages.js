@@ -7,6 +7,14 @@ export const getAllMessages = async () => {
       return error;
     }
   };
+export const getSingleMessage = async (messageId) => {
+    try {
+      const {data } = await api.getSingleMessage(messageId);
+      return data;
+    } catch (error) {
+      return error;
+    }
+  };
   export const deleteMessage = async (multiId) => {
     try {
       const {data } = await api.deleteMessage(multiId);

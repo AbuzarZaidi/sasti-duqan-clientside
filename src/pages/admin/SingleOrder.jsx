@@ -1,11 +1,30 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useState,useEffect } from "react";
+import { useParams } from 'react-router-dom';
+import {getSingleOrder} from '../../functions/admin/orders'
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ProductsGrid from "../../components/admin/allorders/ProductGrid";
 const SingleOrder = () => {
-  const order = useSelector((state) => state.orderData.order);
-  console.log(order);
+  const { orderId } = useParams(); // Access productId from URL parameter
+  const [orderData, setOrderData] = useState(null); // State to store product data
+
+  useEffect(() => {
+    
+    const fetchOrderData = async () => {
+      try {
+        const response = await getSingleOrder(orderId); 
+        
+        console.log(response.data)
+        setOrderData(response.data);
+      } catch (error) {
+        console.error('Error fetching product data:', error);
+      }
+    };
+    fetchOrderData(); 
+  }, [orderId]);
+  if (!orderData) {
+    return <p>Loading...</p>; 
+  }
   return (
     <Box
       sx={{
@@ -26,17 +45,17 @@ const SingleOrder = () => {
       <Box>
         <Box>
           <Typography variant="subtitle2" component="subtitle2">
-            <b>Tracking Id:</b> {order.trackingId}
+            <b>Tracking Id:</b> {orderData.trackingId}
           </Typography>
         </Box>
         <Box>
           <Typography variant="subtitle2" component="subtitle2">
-            <b>Status:</b> {order.status}
+            <b>Status:</b> {orderData.status}
           </Typography>
         </Box>
         <Box>
           <Typography variant="subtitle2" component="subtitle2">
-            <b>Total:</b> {order.total}
+            <b>Total:</b> {orderData.total}
           </Typography>
         </Box>
         <Box sx={{ marginTop: 3, marginBottom: 2 }}>
@@ -46,7 +65,7 @@ const SingleOrder = () => {
         </Box>
         <Box>
           <Typography variant="subtitle2" component="subtitle2">
-            <b>Name:</b> {order.userInfo.firstName} {order.userInfo.lastName}
+            <b>Name:</b> {orderData.userInfo.firstName} {orderData.userInfo.lastName}
           </Typography>
         </Box>
         <Box
@@ -57,24 +76,10 @@ const SingleOrder = () => {
           }}
         >
           <Typography variant="subtitle2" component="subtitle2">
-            <b>Email:</b> {order.userInfo.email}
+            <b>Email:</b> {orderData.userInfo.email}
           </Typography>
           <Typography variant="subtitle2" component="subtitle2">
-            <b>Phone Number:</b> {order.userInfo.phoneNumber}
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            width: "100%",
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography variant="subtitle2" component="subtitle2">
-            <b>City:</b> {order.userInfo.city}
-          </Typography>
-          <Typography variant="subtitle2" component="subtitle2">
-            <b>Zip Code:</b> {order.userInfo.zipCode}
+            <b>Phone Number:</b> {orderData.userInfo.phoneNumber}
           </Typography>
         </Box>
         <Box
@@ -85,7 +90,21 @@ const SingleOrder = () => {
           }}
         >
           <Typography variant="subtitle2" component="subtitle2">
-            <b>Address:</b> {order.userInfo.address}
+            <b>City:</b> {orderData.userInfo.city}
+          </Typography>
+          <Typography variant="subtitle2" component="subtitle2">
+            <b>Zip Code:</b> {orderData.userInfo.zipCode}
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography variant="subtitle2" component="subtitle2">
+            <b>Address:</b> {orderData.userInfo.address}
           </Typography>
         </Box>
         <Box></Box>
@@ -95,7 +114,7 @@ const SingleOrder = () => {
             Products:
           </Typography>
         </Box>
-      <ProductsGrid product={order.products}/>
+      <ProductsGrid product={orderData.products}/>
     </Box>
   );
 };
