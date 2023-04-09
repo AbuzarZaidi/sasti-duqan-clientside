@@ -23,3 +23,12 @@ export const getSingleOrder = async (orderId) => {
       return error;
     }
   };
+  export const updateOrderStatus = async (id,status) => {
+    try {
+      const {data } = await api.updateOrderStatus(id,status);
+      return data;
+    } catch (error) {
+      return error;
+    }
+  };
+  

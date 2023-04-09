@@ -1,13 +1,27 @@
 import React, { useState,useEffect } from "react";
 import { useParams } from 'react-router-dom';
-import {getSingleOrder} from '../../functions/admin/orders'
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import {getSingleOrder,updateOrderStatus} from '../../functions/admin/orders'
+import {
+  Button,
+  Box,
+  Typography,
+  
+} from "../../utils/MUI";
+
 import ProductsGrid from "../../components/admin/allorders/ProductGrid";
 const SingleOrder = () => {
-  const { orderId } = useParams(); // Access productId from URL parameter
-  const [orderData, setOrderData] = useState(null); // State to store product data
-
+  const { orderId } = useParams(); 
+  const [orderData, setOrderData] = useState(null); 
+  const [deliver,setDeliver]=useState(false)
+const updateStatusHandler=async()=>{
+  console.log(orderId)
+const response=await updateOrderStatus(orderId,"delivered")
+console.log(response)
+if(response.success){
+  console.log("success")
+  setDeliver(true)
+}
+}
   useEffect(() => {
     
     const fetchOrderData = async () => {
@@ -115,6 +129,21 @@ const SingleOrder = () => {
           </Typography>
         </Box>
       <ProductsGrid product={orderData.products}/>
+      {orderData.status==="pending"&&
+      <Button
+            variant="contained"
+            sx={{
+              marginTop:2,
+              backgroundColor: "#FD8004",
+              "&:hover": {
+                backgroundColor: "#FFA931",
+              },
+            }}
+            onClick={updateStatusHandler}
+            disabled={deliver}
+          >
+           Delivered 
+          </Button>}
     </Box>
   );
 };
