@@ -1,6 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import LogoutIcon from '@mui/icons-material/Logout';
 import "./style.css";
 const SideBar = () => {
   return (
@@ -58,9 +59,11 @@ const SideBar = () => {
        
       </Box>
       <NavLink
+      sx={{alignItems:"center"}}
       className="navLink"
         to="/"
       >
+        <LogoutIcon/>
         Logout
       </NavLink>
     </Box>
