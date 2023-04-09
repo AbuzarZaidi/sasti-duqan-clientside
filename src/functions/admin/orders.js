@@ -15,3 +15,11 @@ export const getSingleOrder = async (orderId) => {
       return error;
     }
   };
+  export const deleteOrder = async (multiId) => {
+    try {
+      const {data } = await api.deleteOrder(multiId);
+      return data;
+    } catch (error) {
+      return error;
+    }
+  };

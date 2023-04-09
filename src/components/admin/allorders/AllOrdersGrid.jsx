@@ -200,7 +200,7 @@ function EnhancedTableToolbar(props) {
           id="tableTitle"
           component="div"
         >
-          Nutrition
+         Orders List:
         </Typography>
       )}
 
@@ -225,7 +225,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-const AllOrdersGrid = ({ rows }) => {
+const AllOrdersGrid = ({ rows, deleteHandler }) => {
   const navigate=useNavigate();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
@@ -244,7 +244,7 @@ const AllOrdersGrid = ({ rows }) => {
   }
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.name);
+      const newSelected = rows.map((n) => n.id);
       const newIds = rows.map((obj) => obj.id);
       setSelectedItems(newIds);
       setSelected(newSelected);
@@ -255,11 +255,11 @@ const AllOrdersGrid = ({ rows }) => {
   };
 
   const handleClick = (event, name, id) => {
-    const selectedIndex = selected.indexOf(name);
+    const selectedIndex = selected.indexOf(id);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -288,7 +288,7 @@ const AllOrdersGrid = ({ rows }) => {
     setPage(0);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (id) => selected.indexOf(id) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -299,7 +299,7 @@ const AllOrdersGrid = ({ rows }) => {
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar
           numSelected={selected.length}
-          // deleteHandler={deleteHandler}
+          deleteHandler={deleteHandler}
           selectedItems={selectedItems}
           setSelected={ setSelected}
         />
@@ -321,7 +321,7 @@ const AllOrdersGrid = ({ rows }) => {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (

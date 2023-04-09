@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
-  getAllOrders
+  getAllOrders,deleteOrder
 } from "../../functions/admin/orders";
 import {
   Button,
@@ -28,6 +28,18 @@ const AllOrders = () => {
     };
     fetchData();
   }, []);
+  const deleteHandler = async (multiId) => {
+   
+    const result = await deleteOrder(multiId);
+    console.log(result.result);
+    const data = [];
+    if (result.result) {
+      const filteredOrders = orders.filter((order) => {
+        return !multiId.includes(order.id);
+      });
+      setOrders(filteredOrders);
+    }
+  };
     return (
         <Box
           sx={{ width: "95%", mx: "auto", marginTop: "1rem", marginBottom: "5rem" }}
@@ -40,7 +52,7 @@ const AllOrders = () => {
             </Box>
           </Box>
           <Box>
-            <AllOrdersGrid rows={orders}/>
+            <AllOrdersGrid rows={orders} deleteHandler={deleteHandler}/>
           </Box>
         </Box>
       );

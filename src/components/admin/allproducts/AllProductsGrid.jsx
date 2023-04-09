@@ -199,7 +199,7 @@ function EnhancedTableToolbar(props) {
           id="tableTitle"
           component="div"
         >
-          Nutrition
+          Products List:
         </Typography>
       )}
 
