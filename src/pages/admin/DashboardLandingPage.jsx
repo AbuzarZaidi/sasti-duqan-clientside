@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import {getTotalRecord} from '../../functions/admin/dashboard'
 import {
   Button,
   FormLabel,
@@ -12,6 +13,18 @@ import {
 } from "../../utils/MUI";
 
 const DashboardLandingPage = () => {
+  const [data,setData]=useState({})
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getTotalRecord();
+      if (result.success===true) {
+        setData(result.data);
+        console.log(result.data);
+      }
+    };
+    fetchData();
+  }, [])
+  
   return (
     <Box
       sx={{ width: "95%", mx: "auto", marginTop: "1rem", marginBottom: "5rem" }}
@@ -46,7 +59,7 @@ const DashboardLandingPage = () => {
                 Total Sale
               </Typography>
               <Typography variant="h6" sx={{ fontSize: "2rem" }} gutterBottom>
-                Rs. 100000
+                Rs. {data.totalSales}
               </Typography>
             </Box>
           </Box>
@@ -80,7 +93,7 @@ const DashboardLandingPage = () => {
                 Pending Amount
               </Typography>
               <Typography variant="h6" sx={{ fontSize: "2rem" }} gutterBottom>
-                Rs. 500000
+                Rs. {data.totalPending}
               </Typography>
             </Box>
           </Box>
@@ -114,7 +127,7 @@ const DashboardLandingPage = () => {
                 Complete Orders
               </Typography>
               <Typography variant="h6" sx={{ fontSize: "2rem" }} gutterBottom>
-                Rs. 10000
+                {data.completedOrder}
               </Typography>
             </Box>
           </Box>

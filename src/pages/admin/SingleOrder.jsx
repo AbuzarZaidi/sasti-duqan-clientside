@@ -67,19 +67,21 @@ if(response.success){
             <b>Status:</b> {orderData.status}
           </Typography>
         </Box>
-        <Box>
-          <Typography variant="subtitle2" component="subtitle2">
-            <b>Total:</b> {orderData.total}
-          </Typography>
-        </Box>
         <Box sx={{ marginTop: 3, marginBottom: 2 }}>
           <Typography variant="h6" component="h6">
             UserInfo:
           </Typography>
         </Box>
-        <Box>
+        <Box sx={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+          }}>
           <Typography variant="subtitle2" component="subtitle2">
             <b>Name:</b> {orderData.userInfo.firstName} {orderData.userInfo.lastName}
+          </Typography>
+          <Typography variant="subtitle2" component="subtitle2">
+            <b>Email:</b> {orderData.userInfo.email}
           </Typography>
         </Box>
         <Box
@@ -89,46 +91,51 @@ if(response.success){
             justifyContent: "space-between",
           }}
         >
-          <Typography variant="subtitle2" component="subtitle2">
-            <b>Email:</b> {orderData.userInfo.email}
+           <Typography variant="subtitle2" component="subtitle2">
+            <b>Address:</b> {orderData.userInfo.address}
           </Typography>
           <Typography variant="subtitle2" component="subtitle2">
             <b>Phone Number:</b> {orderData.userInfo.phoneNumber}
           </Typography>
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            width: "100%",
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography variant="subtitle2" component="subtitle2">
-            <b>City:</b> {orderData.userInfo.city}
-          </Typography>
-          <Typography variant="subtitle2" component="subtitle2">
-            <b>Zip Code:</b> {orderData.userInfo.zipCode}
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            width: "100%",
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography variant="subtitle2" component="subtitle2">
-            <b>Address:</b> {orderData.userInfo.address}
-          </Typography>
-        </Box>
-        <Box></Box>
+    
+     
+       
       </Box>
       <Box sx={{ marginTop: 3, marginBottom: 2 }}>
           <Typography variant="h6" component="h6">
-            Products:
+            Product Detail:
           </Typography>
         </Box>
-      <ProductsGrid product={orderData.products}/>
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+          }}
+        >
+           <Typography variant="subtitle2" component="subtitle2">
+            <b>Product Name:</b> {orderData.name}
+          </Typography>
+          <Typography variant="subtitle2" component="subtitle2">
+            <b>Quantity:</b> {orderData.quantity}
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography variant="subtitle2" component="subtitle2">
+            <b>Price:</b> {orderData.price}
+          </Typography>
+          <Typography variant="subtitle2" component="subtitle2">
+            <b>Total:</b> {orderData.price*orderData.quantity}
+          </Typography>
+        </Box>
+
       {orderData.status==="pending"&&
       <Button
             variant="contained"

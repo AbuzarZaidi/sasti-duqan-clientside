@@ -74,10 +74,16 @@ const headCells = [
     label: "Tracking Id",
   },
   {
-    id: "total",
+    id: "name",
     numeric: true,
     disablePadding: false,
-    label: "Total",
+    label: "Product",
+  },
+  {
+    id: "quantity",
+    numeric: true,
+    disablePadding: false,
+    label: "Quantity",
   },
   {
     id: "status",
@@ -353,7 +359,8 @@ const AllOrdersGrid = ({ rows, deleteHandler }) => {
                       >
                         {row.trackingId}
                       </TableCell>
-                      <TableCell align="right">{row.total}</TableCell>
+                      <TableCell align="right">{row.productName}</TableCell>
+                      <TableCell align="right">{row.quantity}</TableCell>
                       <TableCell align="right">{row.status}</TableCell>
                       <TableCell align="right">{row.userInfo.firstName} {row.userInfo.lastName}</TableCell>
                       <TableCell align="right">{row.userInfo.email}</TableCell>
