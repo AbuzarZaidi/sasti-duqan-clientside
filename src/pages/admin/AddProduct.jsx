@@ -30,21 +30,23 @@ const AddProduct = () => {
   });
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [images, setImages] = useState([]);
-  const [image,setImage]=useState("")
+  const [imagesShow, setImagesShow] = useState([]);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [selectedColors, setSelectedColors] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
 
   const [visibility, setVisibility] = useState("private");
-  const handleOtherImages = (e) => {
-    const uploadedImages = e.target.files;
+  const handleImageUpload = (e) => {
+    const uploadedImages = Array.from(e.target.files);
+    setImagesShow(uploadedImages)
+    setImages(e.target.files);
+  };
 
-    setImages(uploadedImages);
-  }
-  const handleMainImage=(event)=>{
-
-    setImage(event.target.files[0])
-  }
+  const handleImageClick = (index) => {
+    // Update the state with the index of the clicked image
+    setSelectedImageIndex(index);
+  };
   const handleSizeChange = (event) => {
     const { value, checked } = event.target;
     if (checked) {
@@ -79,7 +81,7 @@ const AddProduct = () => {
   };
   const addProductHandler = async () => {
     const formData = new FormData();
-    formData.append('images',image)
+    formData.append('mainImageIndex',selectedImageIndex)
     for (let i = 0; i < images.length; i++) {
       formData.append('images', images[i]);
     }
@@ -436,33 +438,32 @@ const AddProduct = () => {
             </RadioGroup>
           </FormControl>
         </Box>
-        <Box sx={{ display: "flex" }}>
-          <Box sx={{ marginTop: "50px", marginLeft: "50px" }}>
-            <Typography
+   
+          <Box  sx={{ marginTop: "50px", marginLeft: "50px" }}>
+          <Typography
               variant="body1"
               component="h3"
-              sx={{ color: "#000000" }}
+              sx={{ color: "#000000",mb:2}}
             >
-              Cover Image
+               Images
             </Typography>
-            <input type="file" name="image"  onChange={handleMainImage}
-             style={{marginTop:"10px"}}
-             />
-          </Box>
-          <Box sx={{ marginTop: "50px", marginLeft: "50px" }}>
-            <Typography
-              variant="body1"
-              component="h3"
-              sx={{ color: "#000000" }}
-            >
-              Other Images
-            </Typography>
-             <input type="file" name="images" multiple onChange={handleOtherImages}
-             style={{marginTop:"10px"}}
-             />
-             
-          </Box>
-        </Box>
+      <input type="file" multiple onChange={handleImageUpload} />
+      <div>
+        {imagesShow.length>0&&<Typography sx={{mt:2,mb:1}}>Please Select Main Image!</Typography>}
+        {imagesShow.map((image, index) => (
+          <img
+            key={index}
+            src={URL.createObjectURL(image)}
+            alt={`Image ${index}`}
+            onClick={() => handleImageClick(index)}
+            style={{ cursor: 'pointer',marginRight:"15px",border: index === selectedImageIndex ? '3px solid #EB7F25' : '1px solid black',marginTop:"10px" }}
+            width="100px"
+            height="100px"
+          />
+        ))}
+      </div>
+      
+    </Box>
         <Box
           sx={{
             display: "flex",
