@@ -21,6 +21,7 @@ import "./css/style.css";
 import Footer from "./components/user/footer/Footer";
 import ShoppingCart from "./pages/user/ShoppingCart";
 import ProductDetail from "./pages/user/ProductDetail";
+import UpdateProduct from "./pages/admin/UpdateProduct";
 import Checkout from "./pages/user/Checkout";
 import Signup from "./pages/user/Signup";
 import Signin from "./pages/user/Signin";
@@ -79,6 +80,7 @@ function App() {
           {isLogin && <Route path="/signin" element={<Signin />} />}
           <Route path="/admin/" element={ <PageStructure><DashboardLandingPage /></PageStructure>} />
           <Route path="/admin/addProduct" element={ <PageStructure><AddProduct /></PageStructure>} />
+          <Route path="/admin/updateProduct/:productId" element={ <PageStructure><UpdateProduct/></PageStructure>} />
           <Route path="/admin/allProduct" element={ <PageStructure><AllProduct /></PageStructure>} />
           <Route path="/admin/allMessages" element={ <PageStructure><AllMessages /></PageStructure>} />
           <Route path="/admin/singleMessage/:messageId" element={ <PageStructure><SingleMessage /></PageStructure>} />

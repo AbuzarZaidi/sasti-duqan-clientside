@@ -12,7 +12,7 @@ const DashboardLandingPage = () => {
       const result = await getTotalRecord();
       if (result.success === true) {
         setData(result.data);
-        console.log(result.data);
+
       }
     };
     fetchData();

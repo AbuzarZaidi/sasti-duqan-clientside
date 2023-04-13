@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
-
+import { Link,useNavigate } from "react-router-dom";
 import TableBody from "@mui/material/TableBody";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
@@ -225,6 +225,7 @@ EnhancedTableToolbar.propTypes = {
 };
 
 const AllProductsGrid = ({ rows, deleteHandler, updateHandler }) => {
+  const navigate=useNavigate();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
@@ -237,7 +238,9 @@ const AllProductsGrid = ({ rows, deleteHandler, updateHandler }) => {
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
-
+const singleOrderUpdateHandler=(id)=>{
+  navigate(`/admin/updateProduct/${id}`)
+}
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelected = rows.map((n) => n.name);
@@ -359,7 +362,7 @@ const AllProductsGrid = ({ rows, deleteHandler, updateHandler }) => {
                             sx={{ cursor: "pointer" }}
                             onClick={() => deleteHandler(row.id)}
                           /> */}
-                          <CreateOutlinedIcon sx={{ cursor: "pointer" }} />
+                          <CreateOutlinedIcon sx={{ cursor: "pointer" }} onClick={()=>{singleOrderUpdateHandler(row.id)}}/>
 
                           {row.visibility === "public" ? (
                             <VisibilityOutlinedIcon

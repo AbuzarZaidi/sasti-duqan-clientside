@@ -15,6 +15,14 @@ export const getAllPrivateProducts = async (visibility) => {
       return error;
     }
   };
+export const getSinglePrivate = async (id) => {
+    try {
+      const {data } = await api.getSinglePrivate(id);
+      return data;
+    } catch (error) {
+      return error;
+    }
+  };
   export const deleteProduct = async (id) => {
     try {
       const {data } = await api.deleteProduct(id);
@@ -31,3 +39,11 @@ export const getAllPrivateProducts = async (visibility) => {
       return error;
     }
   };
+  export const updateProduct=async(formData, header,id)=>{
+    try {
+      const {data } = await api.updateProduct(formData, header,id);
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }

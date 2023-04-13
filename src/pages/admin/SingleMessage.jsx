@@ -13,7 +13,7 @@ const SingleMessage = () => {
       try {
         const response = await getSingleMessage(messageId); 
         
-        console.log(response.data)
+        
         setMessageData(response.data);
       } catch (error) {
         console.error('Error fetching product data:', error);

@@ -20,10 +20,10 @@ const AllOrders = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await getAllOrders();
-      // console.log(result);
+      
       if (result.data.length > 0) {
         setOrders(result.data);
-        console.log(result.data);
+       
       }
     };
     fetchData();
@@ -31,7 +31,7 @@ const AllOrders = () => {
   const deleteHandler = async (multiId) => {
    
     const result = await deleteOrder(multiId);
-    console.log(result.result);
+   
     const data = [];
     if (result.result) {
       const filteredOrders = orders.filter((order) => {

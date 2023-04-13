@@ -17,10 +17,10 @@ const AllMessages = () => {
   useEffect(() => {
     const fetchData=async()=>{
 const result=await getAllMessages("public");
-console.log(result)
+
 if(result.data.length>0){
   setMessages(result.data)
-  console.log(result.data)
+  
 }
     }
     fetchData();
@@ -28,7 +28,7 @@ if(result.data.length>0){
   const deleteHandler = async (multiId) => {
    
     const result = await deleteMessage(multiId);
-    console.log(result.result);
+    
     const data = [];
     if (result.result) {
       const filteredMessages = messages.filter((message) => {

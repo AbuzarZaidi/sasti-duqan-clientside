@@ -12,11 +12,11 @@ const SingleOrder = () => {
   const [orderData, setOrderData] = useState(null); 
   const [deliver,setDeliver]=useState(false)
 const updateStatusHandler=async()=>{
-  console.log(orderId)
+
 const response=await updateOrderStatus(orderId,"delivered")
-console.log(response)
+
 if(response.success){
-  console.log("success")
+ 
   setDeliver(true)
 }
 }
@@ -25,8 +25,7 @@ if(response.success){
     const fetchOrderData = async () => {
       try {
         const response = await getSingleOrder(orderId); 
-        
-        console.log(response.data)
+       
         setOrderData(response.data);
       } catch (error) {
         console.error('Error fetching product data:', error);

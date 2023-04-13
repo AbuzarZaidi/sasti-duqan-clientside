@@ -28,9 +28,9 @@ const AllProducts = () => {
     fetchData();
   }, []);
   const deleteHandler = async (multiId) => {
-    console.log(multiId);
+    
     const result = await deleteProduct(multiId);
-    console.log(result.result);
+  
     const data = [];
     if (result.result) {
       const filteredProducts = products.filter((product) => {
@@ -45,7 +45,7 @@ const AllProducts = () => {
       const result = await getAllPrivateProducts("");
       if (result.data.length > 0) {
         setProducts(result.data);
-        console.log(result.data);
+        
       }
     }
   };

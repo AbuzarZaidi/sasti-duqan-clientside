@@ -38,7 +38,7 @@ const AddProduct = () => {
   const [visibility, setVisibility] = useState("private");
   const handleOtherImages = (e) => {
     const uploadedImages = e.target.files;
-    console.log(uploadedImages)
+
     setImages(uploadedImages);
   }
   const handleMainImage=(event)=>{
@@ -93,13 +93,13 @@ const AddProduct = () => {
     formData.append("selectedColors", JSON.stringify(selectedColors));
     formData.append("selectedSizes",JSON.stringify(selectedSizes));
     formData.append("selectedCategorys", selectedCategory);
-   console.log(formData)
+   
     const response=  await createProducts(formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(response)
+  
     if (response.success === true) {
       setAlertType("success");
     } else if (response.success === false) {
@@ -107,7 +107,7 @@ const AddProduct = () => {
     }
     setShowAlert(true);
     setAlertMessage(response.message);
-    console.log(response);
+    
     setProductInfo({
       name: "",
       description: "",
