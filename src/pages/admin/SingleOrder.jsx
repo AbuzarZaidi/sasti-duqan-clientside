@@ -7,8 +7,6 @@ import {
   Typography,
   
 } from "../../utils/MUI";
-
-import ProductsGrid from "../../components/admin/allorders/ProductGrid";
 const SingleOrder = () => {
   const { orderId } = useParams(); 
   const [orderData, setOrderData] = useState(null); 

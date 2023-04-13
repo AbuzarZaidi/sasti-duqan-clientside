@@ -1,35 +1,30 @@
-import React, { useState,useEffect } from "react";
-import {getTotalRecord} from '../../functions/admin/dashboard'
+import React, { useState, useEffect } from "react";
+import { getTotalRecord } from "../../functions/admin/dashboard";
 import {
-  Button,
-  FormLabel,
   Box,
   Typography,
-  TextField,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  FormControl,
 } from "../../utils/MUI";
-
+import NewOrderList from '../../components/admin/dashboard/NewOrderList'
 const DashboardLandingPage = () => {
-  const [data,setData]=useState({})
+  const [data, setData] = useState({});
   useEffect(() => {
     const fetchData = async () => {
       const result = await getTotalRecord();
-      if (result.success===true) {
+      if (result.success === true) {
         setData(result.data);
         console.log(result.data);
       }
     };
     fetchData();
-  }, [])
-  
+  }, []);
+
   return (
     <Box
       sx={{ width: "95%", mx: "auto", marginTop: "1rem", marginBottom: "5rem" }}
     >
-      <Box sx={{ display: "flex", justifyContent: "space-around", mt: 3,mb:2 }}>
+      <Box
+        sx={{ display: "flex", justifyContent: "space-around", mt: 3, mb: 2 }}
+      >
         <Box
           sx={{
             backgroundColor: "#FFEECC",
@@ -131,11 +126,10 @@ const DashboardLandingPage = () => {
               </Typography>
             </Box>
           </Box>
+
         </Box>
       </Box>
-      <Box>
-
-      </Box>
+<NewOrderList rows={data.newOrders}/>
     </Box>
   );
 };
