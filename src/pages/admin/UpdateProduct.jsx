@@ -32,9 +32,8 @@ const UpdateProduct = () => {
   });
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [images, setImages] = useState([]);
-  const [imagesCopy, setImagesCopy] = useState([]);
-  const [imageCopy,setImageCopy]=useState("")
-  const [image,setImage]=useState("")
+  const [imagesShow, setImagesShow] = useState([]);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [selectedColors, setSelectedColors] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 const[show,setShow]=useState(false)
@@ -56,27 +55,25 @@ const[show,setShow]=useState(false)
         setSelectedCategory(product.data.category)
         setSelectedColors(product.data.colors)
         setSelectedSizes(product.data.sizes)
-        setImages(product.data.mainImage)
-       
-        setImage(product.data.mainImage)
-        setImages(product.data.images)
-        setImageCopy(product.data.mainImage)
-        setImagesCopy(product.data.images)
+        setImagesShow(product.data.images)
+        setSelectedImageIndex(product.data.mainImage)
+        
         setShow(true)
       }
      
     }
 fetchData()
   }, [])
-  const handleOtherImages = (e) => {
-    const uploadedImages = e.target.files;
+  const handleImageUpload = (e) => {
+    const uploadedImages = Array.from(e.target.files);
+    setImagesShow(uploadedImages)
+    setImages(e.target.files);
+  };
 
-    setImages(uploadedImages);
-  }
-  const handleMainImage=(event)=>{
-
-    setImage(event.target.files[0])
-  }
+  const handleImageClick = (index) => {
+    // Update the state with the index of the clicked image
+    setSelectedImageIndex(index);
+  };
   const handleSizeChange = (event) => {
     const { value, checked } = event.target;
     if (checked) {
@@ -111,16 +108,22 @@ fetchData()
   };
   const updateProductHandler = async () => {
     const formData = new FormData();
-    if(image!==imageCopy){
-      console.log("image")
-      formData.append('images',image)
-    }
-   if(images[0]!==imagesCopy[0]){
-    console.log("images")
-    for (let i = 0; i < images.length; i++) {
+  //   if(image!==imageCopy){
+  //     console.log("image")
+  //     formData.append('images',image)
+  //   }
+  //  if(images[0]!==imagesCopy[0]){
+  //   console.log("images")
+  //   for (let i = 0; i < images.length; i++) {
+  //     formData.append('images', images[i]);
+  //   }
+  //  }
+  if(images.length>0){
+       for (let i = 0; i < images.length; i++) {
       formData.append('images', images[i]);
     }
-   }
+  }
+  formData.append("mainImageIndex", selectedImageIndex);
     formData.append("name", productInfo.name);
     formData.append("description", productInfo.description);
     formData.append("longDescription", productInfo.longDescription);
@@ -474,7 +477,7 @@ fetchData()
             </RadioGroup>
           </FormControl>
         </Box>
-        <Box sx={{display:"flex",alignItems:"center",marginTop: "50px", marginLeft: "50px"}}>
+        {/* <Box sx={{display:"flex",alignItems:"center",marginTop: "50px", marginLeft: "50px"}}>
           <Typography variant="body1"
               component="h3"
               sx={{ color: "#000000",mr:2 }}>Cover Image: </Typography>
@@ -497,7 +500,32 @@ fetchData()
 ))}
                
         </Box>
+       */}
+       <Box  sx={{ marginTop: "50px", marginLeft: "50px" }}>
+          <Typography
+              variant="body1"
+              component="h3"
+              sx={{ color: "#000000",mb:2}}
+            >
+               Images
+            </Typography>
+      <input type="file" multiple onChange={handleImageUpload} />
+      <div>
+        {imagesShow.length>0&&<Typography sx={{mt:2,mb:1}}>Please Select Main Image!</Typography>}
+        {imagesShow.map((image, index) => (
+          <img
+            key={index}
+            src={images.length>0?URL.createObjectURL(image):`http://localhost:5000/${image}`}
+            alt={`Image ${index}`}
+            onClick={() => handleImageClick(index)}
+            style={{ cursor: 'pointer',marginRight:"15px",border: index === selectedImageIndex ? '3px solid #EB7F25' : '1px solid black',marginTop:"10px" }}
+            width="100px"
+            height="100px"
+          />
+        ))}
+      </div>
       
+    </Box>
         <Box
           sx={{
             display: "flex",
@@ -516,7 +544,7 @@ fetchData()
             onClick={updateProductHandler}
             disabled={isButtonDisabled}
           >
-            Add Product
+            Update Product
           </Button>
         </Box>
       </Box>}
